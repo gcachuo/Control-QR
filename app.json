@@ -1,8 +1,9 @@
 {
   "expo": {
     "name": "control-qr",
+    "scheme": "com.gcachuo.control-qr",
     "slug": "control-qr",
-    "version": "1.0.0",
+    "version": "1.0.2",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -21,10 +22,25 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.gcachuo.controlqr"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "updates": {
+      "enabled": true,
+      "checkAutomatically": "ON_LOAD",
+      "fallbackToCacheTimeout": 0,
+      "url": "https://u.expo.dev/b679aabf-0a98-49c0-bc66-5d31ddc5e247"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "b679aabf-0a98-49c0-bc66-5d31ddc5e247"
+      }
+    },
+    "runtimeVersion": {
+      "policy": "sdkVersion"
     }
   }
 }
