@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "control-qr",
-    "scheme": "com.gcachuo.control-qr",
+    "scheme": "controlqr",
     "slug": "control-qr",
     "version": "1.0.2",
     "orientation": "portrait",
