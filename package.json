@@ -8,7 +8,8 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "build:android": "rm -rf ./build/*.apk && eas build --platform android --local",
-    "build:ios": "eas build --platform ios --local"
+    "build:ios": "eas build --platform ios --local",
+    "update": "eas update --branch production"
   },
   "dependencies": {
     "expo": "~48.0.6",
@@ -19,7 +20,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
-    "@types/react": "~18.0.14",
+    "@types/react": "~18.0.27",
     "typescript": "^4.9.4"
   },
   "private": true

@@ -4,17 +4,21 @@
   },
   "build": {
     "development": {
+      "channel": "develop",
       "developmentClient": true,
       "distribution": "internal"
     },
     "preview": {
+      "channel": "preview",
       "distribution": "internal"
     },
     "production": {
+      "channel": "production",
       "android": {
         "buildType": "apk",
         "env": {
-          "ANDROID_SDK_ROOT": "/usr/local/Android/sdk"
+          "ANDROID_SDK_ROOT": "/usr/local/Android/sdk",
+          "EAS_LOCAL_BUILD_ARTIFACTS_DIR": "./build"
         }
       }
     }
