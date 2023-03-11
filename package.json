@@ -12,6 +12,7 @@
     "update": "eas update --branch production"
   },
   "dependencies": {
+    "@types/firebase": "^3.2.1",
     "expo": "~48.0.6",
     "expo-status-bar": "~1.4.4",
     "expo-updates": "~0.16.3",

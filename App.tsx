@@ -1,103 +1,62 @@
-import {
-  Button,
-  SafeAreaView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-} from "react-native";
-import React, { useEffect, useState } from "react";
-import * as Updates from "expo-updates";
-import firebase from "firebase/compat";
-import { firebaseConfig } from "./firebaseConfig";
+import React, { useState } from 'react';
+import { Alert, Button, StatusBar, Text, TextInput, View } from 'react-native';
+import firebase from 'firebase/compat';
+import { firebaseConfig } from './firebaseConfig'; // importa tu configuración de Firebase
 
-firebase.initializeApp(firebaseConfig);
+// inicializa la app de Firebase
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+}
 
 export default function App() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState(null);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [verificationCode, setVerificationCode] = useState('');
+  const [verificationId, setVerificationId] = useState('');
 
-  useEffect(() => {
-    async function checkForUpdate() {
-      try {
-        const { isAvailable } = await Updates.checkForUpdateAsync();
-        if (isAvailable) {
-          await Updates.fetchUpdateAsync();
-          // Recarga la aplicación para cargar la actualización
-          await Updates.reloadAsync();
-        }
-      } catch (e) {
-        console.log(e);
-      }
+  // función que maneja el envío del código de verificación
+  const handleSendCode = async () => {
+    try {
+      const recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
+        size: 'invisible',
+        defaultCountry: 'MX',
+        language: 'es',
+      });
+
+      const result = await firebase.auth().signInWithPhoneNumber(phoneNumber, recaptchaVerifier);
+      setVerificationId(result.verificationId);
+
+      Alert.alert('Código de verificación enviado');
+    } catch (error) {
+      console.log(error);
+      Alert.alert('Error al enviar el código de verificación');
     }
-
-    checkForUpdate();
-  }, []);
-
-  const handleSignUp = () => {
-    firebase
-      .auth()
-      .createUserWithEmailAndPassword(email, password)
-      .then(() => setIsLoggedIn(true))
-      .catch((error) => setError(error.message));
   };
 
-  const handleLogin = () => {
-    firebase
-      .auth()
-      .signInWithEmailAndPassword(email, password)
-      .then(() => setIsLoggedIn(true))
-      .catch((error) => setError(error.message));
-  };
-
-  const handleLogout = () => {
-    firebase
-      .auth()
-      .signOut()
-      .then(() => setIsLoggedIn(false))
-      .catch((error) => setError(error.message));
+  // función que maneja la verificación del código
+  const handleVerifyCode = async () => {
+    try {
+      const credential = firebase.auth.PhoneAuthProvider.credential(
+          verificationId,
+          verificationCode
+      );
+      const userCredential = await firebase.auth().signInWithCredential(credential);
+      Alert.alert('Inicio de sesión exitoso');
+    } catch (error) {
+      console.log(error);
+      Alert.alert('Error al verificar el código');
+    }
   };
 
   return (
-    <SafeAreaView>
       <View>
-        {isLoggedIn ? (
-          <>
-            <Text>You are logged in!</Text>
-            <Button title="Logout" onPress={handleLogout} />
-          </>
-        ) : (
-          <>
-            <TextInput
-              placeholder="Email"
-              value={email}
-              onChangeText={setEmail}
-            />
-            <TextInput
-              placeholder="Password"
-              value={password}
-              onChangeText={setPassword}
-              secureTextEntry
-            />
-            {error && <Text style={{ color: "red" }}>{error}</Text>}
-            <Button title="Sign Up" onPress={handleSignUp} />
-            <Button title="Log In" onPress={handleLogin} />
-          </>
-        )}
-        <StatusBar />
+        <StatusBar/>
+        <Text>Ingrese su número de teléfono:</Text>
+        <TextInput value={phoneNumber} onChangeText={setPhoneNumber} />
+        <Button title="Enviar código" onPress={handleSendCode} />
+
+        <Text>Ingrese el código de verificación:</Text>
+        <TextInput value={verificationCode} onChangeText={setVerificationCode} />
+        <Button title="Verificar código" onPress={handleVerifyCode} />
       </View>
-    </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
