@@ -1,4 +1,4 @@
-import firebase from "firebase/compat";
+import { getApp, getApps, initializeApp } from "firebase/app";
 import {
   getAuth,
   getReactNativePersistence,
@@ -15,13 +15,18 @@ const firebaseConfig = {
   appId: "1:911129246688:web:435b3f17a29660dc650985",
   measurementId: "G-WC849PQ6XB",
 };
-export const firebaseApp = firebase.initializeApp(firebaseConfig);
-firebase.auth().languageCode = "es";
-const appAuth = getAuth();
-if (!appAuth) {
-  const auth = initializeAuth(firebaseApp, {
-    persistence: getReactNativePersistence(AsyncStorage),
-  });
-}
+let app, auth;
 
-export { appAuth };
+if (!getApps().length) {
+  try {
+    app = initializeApp(firebaseConfig);
+    auth = initializeAuth(app, {
+      persistence: getReactNativePersistence(AsyncStorage),
+    });
+  } catch (error) {
+    console.log("Error initializing app: " + error);
+  }
+} else {
+  app = getApp();
+  auth = getAuth(app);
+}

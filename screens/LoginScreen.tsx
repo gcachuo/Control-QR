@@ -1,7 +1,6 @@
 import { Alert, StatusBar, StyleSheet, View } from "react-native";
 import { Appbar, Button, Text, TextInput } from "react-native-paper";
 import React, { useEffect, useState } from "react";
-import firebase from "firebase/compat";
 import {
   NavigationProp,
   ParamListBase,
@@ -9,6 +8,14 @@ import {
   useNavigation,
   useRoute,
 } from "@react-navigation/native";
+import {
+  AuthError,
+  createUserWithEmailAndPassword,
+  getAuth,
+  sendPasswordResetEmail,
+  signInWithEmailAndPassword,
+  signOut,
+} from "firebase/auth/react-native";
 
 export default function LoginScreen() {
   const [email, setEmail] = useState("");
@@ -19,19 +26,18 @@ export default function LoginScreen() {
   const route =
     useRoute<RouteProp<{ Login: { isLoggedIn: boolean } }, "Login">>();
   const isLoggedIn = route.params?.isLoggedIn;
-  console.log(isLoggedIn);
 
   useEffect(() => {
+    console.log(isLoggedIn);
     if (isLoggedIn) {
       navigation.navigate("Home");
     }
   }, [isLoggedIn]);
 
   const handleSignUp = () => {
-    firebase
-      .auth()
-      .createUserWithEmailAndPassword(email, password)
-      .catch((error) => handleErrors(error));
+    createUserWithEmailAndPassword(getAuth(), email, password).catch((error) =>
+      handleErrors(error)
+    );
   };
 
   const handleLogin = () => {
@@ -41,18 +47,15 @@ export default function LoginScreen() {
       return;
     }
 
-    firebase
-      .auth()
-      .signInWithEmailAndPassword(email, password)
-      .catch((error: firebase.FirebaseError) => handleErrors(error));
+    signInWithEmailAndPassword(getAuth(), email, password).catch(
+      (error: AuthError) => handleErrors(error)
+    );
   };
 
   const handleResetPassword = () => {
     setError("");
 
-    firebase
-      .auth()
-      .sendPasswordResetEmail(email)
+    sendPasswordResetEmail(getAuth(), email)
       .then(() => {
         Alert.alert(
           "Correo electrónico enviado",
@@ -63,13 +66,10 @@ export default function LoginScreen() {
   };
 
   const handleLogout = () => {
-    firebase
-      .auth()
-      .signOut()
-      .catch((error) => setError(error.message));
+    signOut(getAuth()).catch((error) => setError(error.message));
   };
 
-  const handleErrors = (error: firebase.FirebaseError) => {
+  const handleErrors = (error: AuthError) => {
     console.log(error.code);
     console.log(error.message);
 

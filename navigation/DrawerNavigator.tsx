@@ -2,12 +2,13 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 import LoginScreen from "../screens/LoginScreen";
 import HomeStackNavigator from "./HomeStackNavigator";
 import { useEffect, useState } from "react";
-import firebase from "firebase/compat";
 import {
   NavigationProp,
   ParamListBase,
   useNavigation,
 } from "@react-navigation/native";
+
+import { getAuth, onAuthStateChanged } from "firebase/auth/react-native";
 
 const Drawer = createDrawerNavigator();
 
@@ -16,7 +17,8 @@ const DrawerNavigator = () => {
   const navigation: NavigationProp<ParamListBase> = useNavigation();
 
   useEffect(() => {
-    const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
+    const unsubscribe = onAuthStateChanged(getAuth(), (user) => {
+      console.log(user);
       if (user) {
         setIsLoggedIn(true);
         navigation.navigate("Home");

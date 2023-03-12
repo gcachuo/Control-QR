@@ -1,13 +1,12 @@
 import "react-native-gesture-handler";
+import "@react-native-async-storage/async-storage";
 import React, { useEffect } from "react";
 import * as Updates from "expo-updates";
 import { SafeAreaView } from "react-native";
 import DrawerNavigator from "./navigation/DrawerNavigator";
 import { NavigationContainer } from "@react-navigation/native";
 import { AuthProvider } from "./hooks/useAuth";
-import { appAuth } from "./firebaseConfig";
-
-console.log(appAuth);
+import "./firebaseConfig";
 
 export default function App() {
   useEffect(() => {
