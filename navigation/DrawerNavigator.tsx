@@ -9,6 +9,7 @@ import {
 } from "@react-navigation/native";
 
 import { getAuth, onAuthStateChanged } from "firebase/auth/react-native";
+import MyAccountStackNavigator from "./MyAccountStackNavigator";
 
 const Drawer = createDrawerNavigator();
 
@@ -43,7 +44,18 @@ const DrawerNavigator = () => {
         />
       )}
       {isLoggedIn && (
-        <Drawer.Screen name="Home" component={HomeStackNavigator} />
+        <Drawer.Group>
+          <Drawer.Screen
+            name="Home"
+            component={HomeStackNavigator}
+            options={{ title: "Inicio" }}
+          />
+          <Drawer.Screen
+            name="MyAccount"
+            component={MyAccountStackNavigator}
+            options={{ title: "Mi Cuenta" }}
+          />
+        </Drawer.Group>
       )}
     </Drawer.Navigator>
   );

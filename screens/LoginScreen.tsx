@@ -14,7 +14,6 @@ import {
   getAuth,
   sendPasswordResetEmail,
   signInWithEmailAndPassword,
-  signOut,
 } from "firebase/auth/react-native";
 
 export default function LoginScreen() {
@@ -62,10 +61,6 @@ export default function LoginScreen() {
         );
       })
       .catch((error) => handleErrors(error));
-  };
-
-  const handleLogout = () => {
-    signOut(getAuth()).catch((error) => setError(error.message));
   };
 
   const handleErrors = (error: AuthError) => {
