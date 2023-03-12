@@ -24,7 +24,7 @@ if (!getApps().length) {
       persistence: getReactNativePersistence(AsyncStorage),
     });
   } catch (error) {
-    console.log("Error initializing app: " + error);
+    console.warn("Error initializing app: " + error);
   }
 } else {
   app = getApp();

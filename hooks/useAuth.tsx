@@ -41,7 +41,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
           await AsyncStorage.removeItem("user");
         }
       } catch (error) {
-        console.log(error);
+        console.warn(error);
       } finally {
         setLoading(false);
       }

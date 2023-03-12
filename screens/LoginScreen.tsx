@@ -28,7 +28,6 @@ export default function LoginScreen() {
   const isLoggedIn = route.params?.isLoggedIn;
 
   useEffect(() => {
-    console.log(isLoggedIn);
     if (isLoggedIn) {
       navigation.navigate("Home");
     }
@@ -70,9 +69,6 @@ export default function LoginScreen() {
   };
 
   const handleErrors = (error: AuthError) => {
-    console.log(error.code);
-    console.log(error.message);
-
     switch (error.code) {
       case "auth/missing-email":
         setError("Por favor ingrese su correo.");

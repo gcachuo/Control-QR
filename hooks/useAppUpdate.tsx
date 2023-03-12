@@ -12,7 +12,7 @@ export const useAppUpdate = (): void => {
           await Updates.reloadAsync();
         }
       } catch (e) {
-        console.log(e);
+        console.warn(e);
       }
     }
 

@@ -18,7 +18,6 @@ const DrawerNavigator = () => {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(getAuth(), (user) => {
-      console.log(user);
       if (user) {
         setIsLoggedIn(true);
         navigation.navigate("Home");
