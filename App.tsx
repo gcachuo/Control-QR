@@ -1,15 +1,13 @@
 import "react-native-gesture-handler";
 import React, { useEffect } from "react";
 import * as Updates from "expo-updates";
-import firebase from "firebase/compat";
-import { firebaseConfig } from "./firebaseConfig";
 import { SafeAreaView } from "react-native";
 import DrawerNavigator from "./navigation/DrawerNavigator";
 import { NavigationContainer } from "@react-navigation/native";
 import { AuthProvider } from "./hooks/useAuth";
+import { appAuth } from "./firebaseConfig";
 
-firebase.initializeApp(firebaseConfig);
-firebase.auth().languageCode = "es";
+console.log(appAuth);
 
 export default function App() {
   useEffect(() => {
