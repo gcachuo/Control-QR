@@ -43,7 +43,11 @@ const DrawerNavigator = () => {
         />
       )}
       {isLoggedIn && (
-        <Drawer.Screen name="Home" component={HomeStackNavigator} />
+        <Drawer.Screen
+          name="Home"
+          component={HomeStackNavigator}
+          options={{ title: "Inicio" }}
+        />
       )}
     </Drawer.Navigator>
   );
