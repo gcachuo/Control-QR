@@ -12,7 +12,12 @@ import {
 import BackButton from "../components/BackButton";
 import { useAuth } from "../hooks/useAuth";
 import { updateProfile } from "firebase/auth/react-native";
+import { FirebaseError } from "firebase/app";
 import { doc, getDoc, getFirestore, setDoc } from "firebase/firestore";
+import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
+import * as ImagePicker from "expo-image-picker";
+import { launchCameraAsync } from "expo-image-picker";
+import { v4 as uuidv4 } from "uuid";
 
 export default function MyAccountScreen() {
   const { user } = useAuth();
@@ -21,6 +26,7 @@ export default function MyAccountScreen() {
     displayName: "",
     email: "",
     phoneNumber: "",
+    photoURL: "",
   });
   const [phoneNumber, setPhoneNumber] = useState("");
 
@@ -28,7 +34,6 @@ export default function MyAccountScreen() {
     (async () => {
       if (user) {
         const data = await getDoc(doc(getFirestore(), "users", user.uid));
-        console.log(data.data());
         setPhoneNumber(data.data()?.phoneNumber);
       }
     })();
@@ -42,6 +47,7 @@ export default function MyAccountScreen() {
         await updateProfile(user, editedData);
         await setDoc(doc(getFirestore(), "users", user.uid), {
           phoneNumber: editedData.phoneNumber,
+          photoURL: editedData.photoURL,
         });
         setPhoneNumber(editedData.phoneNumber);
 
@@ -49,6 +55,41 @@ export default function MyAccountScreen() {
       }
     } catch (error) {
       console.warn(error);
+    }
+  };
+
+  const chooseImage = async () => {
+    const { status } = await ImagePicker.requestCameraPermissionsAsync();
+    if (status !== "granted") {
+      alert("Se requieren permisos de cámara para tomar fotos");
+    }
+
+    const result = await launchCameraAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      quality: 1,
+    });
+
+    if (!result.canceled) {
+      const imageUrl = await uploadImage(result.assets.at(0)?.uri);
+      setEditedData({ ...editedData, photoURL: imageUrl || "" });
+    }
+  };
+
+  const uploadImage = async (uri: any) => {
+    try {
+      const response = await fetch(uri);
+      const blob = await response.blob();
+      const imageRef = ref(getStorage(), "images/" + uuidv4());
+
+      await uploadBytes(imageRef, blob);
+      console.log("Uploaded a blob or file!");
+
+      return await getDownloadURL(imageRef);
+    } catch (e) {
+      if (e instanceof FirebaseError) {
+        console.warn(e.code);
+      }
     }
   };
 
@@ -75,12 +116,13 @@ export default function MyAccountScreen() {
               displayName: user?.displayName || "",
               email: user?.email || "",
               phoneNumber: phoneNumber || "",
+              photoURL: user?.photoURL || "",
             });
             setIsModalVisible(true);
           }}
         >
           <View>
-            <IconButton icon="pencil" size={24} />
+            <IconButton icon="pencil" size={20} />
           </View>
         </TouchableWithoutFeedback>
         <Modal
@@ -109,6 +151,14 @@ export default function MyAccountScreen() {
                 setEditedData({ ...editedData, phoneNumber: text });
               }}
             />
+            <Avatar.Image
+              source={{
+                uri: editedData?.photoURL,
+              }}
+              size={100}
+              style={styles.avatar}
+            />
+            <Button onPress={chooseImage}>Tomar foto</Button>
             <Button
               onPress={async () => {
                 // Lógica para guardar los datos editados
@@ -142,6 +192,8 @@ const styles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 16,
     marginBottom: 10,
+    minWidth:150,
+    textAlign:'center'
   },
   modalContainer: {
     backgroundColor: "white",
