@@ -11,7 +11,7 @@ import {
 } from "react-native-paper";
 import BackButton from "../components/BackButton";
 import { useAuth } from "../hooks/useAuth";
-import { doc, getFirestore, setDoc } from "firebase/firestore";
+import { updateProfile } from "firebase/auth/react-native";
 
 export default function MyAccountScreen() {
   const { user } = useAuth();
@@ -27,7 +27,7 @@ export default function MyAccountScreen() {
       if (user) {
         console.log("Start saving user");
 
-        await setDoc(doc(getFirestore(), "users", user.uid), editedData);
+        await updateProfile(user, editedData);
 
         console.log("Finish save");
       }
@@ -51,13 +51,14 @@ export default function MyAccountScreen() {
           {user?.displayName || "<Sin Nombre>"}
         </Title>
         <Caption style={styles.caption}>{user?.email || ""}</Caption>
+        <Caption style={styles.caption}>{user?.phoneNumber || ""}</Caption>
 
         <TouchableWithoutFeedback
           onPress={() => {
             setEditedData({
               displayName: user?.displayName || "",
               email: user?.email || "",
-              phoneNumber: "",
+              phoneNumber: user?.phoneNumber || "",
             });
             setIsModalVisible(true);
           }}
