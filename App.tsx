@@ -1,39 +1,24 @@
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
-import { useEffect } from "react";
-import * as Updates from "expo-updates";
+import "react-native-gesture-handler";
+import "@react-native-async-storage/async-storage";
+import "./firebaseConfig";
+
+import React from "react";
+import { SafeAreaView } from "react-native";
+import DrawerNavigator from "./navigation/DrawerNavigator";
+import { NavigationContainer } from "@react-navigation/native";
+import { AuthProvider } from "./hooks/useAuth";
+import { useAppUpdate } from "./hooks/useAppUpdate";
 
 export default function App() {
-  useEffect(() => {
-    async function checkForUpdate() {
-      try {
-        const { isAvailable } = await Updates.checkForUpdateAsync();
-        if (isAvailable) {
-          await Updates.fetchUpdateAsync();
-          // Recarga la aplicación para cargar la actualización
-          await Updates.reloadAsync();
-        }
-      } catch (e) {
-        console.log(e);
-      }
-    }
-
-    checkForUpdate();
-  }, []);
+  useAppUpdate();
 
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <AuthProvider>
+      <SafeAreaView style={{ flex: 1 }}>
+        <NavigationContainer>
+          <DrawerNavigator />
+        </NavigationContainer>
+      </SafeAreaView>
+    </AuthProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
