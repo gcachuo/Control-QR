@@ -2,7 +2,7 @@ import React from "react";
 import { FlatList, StyleSheet } from "react-native";
 import Tile, { TileIcon } from "./Tile";
 
-export const Grid = ({
+const Grid = ({
   tiles,
 }: {
   tiles: { title: string; icon: TileIcon; onPress: () => void }[];
@@ -37,3 +37,5 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
 });
+
+export default Grid;

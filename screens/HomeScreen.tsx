@@ -6,7 +6,7 @@ import {
   ParamListBase,
   useNavigation,
 } from "@react-navigation/native";
-import { Grid } from "../components/Grid";
+import Grid from "../components/Grid";
 
 export default function HomeScreen() {
   const { logout } = useAuth();
