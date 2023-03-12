@@ -8,7 +8,7 @@ import DrawerNavigator from "./navigation/DrawerNavigator";
 import { NavigationContainer } from "@react-navigation/native";
 import { AuthProvider } from "./hooks/useAuth";
 
-const firebaseApp = firebase.initializeApp(firebaseConfig);
+firebase.initializeApp(firebaseConfig);
 firebase.auth().languageCode = "es";
 
 export default function App() {
@@ -26,7 +26,7 @@ export default function App() {
       }
     }
 
-    checkForUpdate();
+    checkForUpdate().then();
   }, []);
 
   return (
