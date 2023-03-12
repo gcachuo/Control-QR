@@ -1,35 +1,71 @@
 import { Alert, StatusBar, StyleSheet, View } from "react-native";
 import { Appbar, Button, Text, TextInput } from "react-native-paper";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import firebase from "firebase/compat";
+import {
+  NavigationProp,
+  ParamListBase,
+  RouteProp,
+  useNavigation,
+  useRoute,
+} from "@react-navigation/native";
 
 export default function LoginScreen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string>(null as unknown as string);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const navigation: NavigationProp<ParamListBase> = useNavigation();
+
+  const route =
+    useRoute<RouteProp<{ Login: { isLoggedIn: boolean } }, "Login">>();
+  const isLoggedIn = route.params?.isLoggedIn;
+  console.log(isLoggedIn);
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigation.navigate("Home");
+    }
+  }, [isLoggedIn]);
 
   const handleSignUp = () => {
     firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)
-      .then(() => setIsLoggedIn(true))
       .catch((error) => handleErrors(error));
   };
 
   const handleLogin = () => {
+    setError("");
+
+    if (!email) {
+      return;
+    }
+
     firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
-      .then(() => setIsLoggedIn(true))
       .catch((error: firebase.FirebaseError) => handleErrors(error));
+  };
+
+  const handleResetPassword = () => {
+    setError("");
+
+    firebase
+      .auth()
+      .sendPasswordResetEmail(email)
+      .then(() => {
+        Alert.alert(
+          "Correo electrónico enviado",
+          "Revisa tu correo electrónico para restablecer tu contraseña."
+        );
+      })
+      .catch((error) => handleErrors(error));
   };
 
   const handleLogout = () => {
     firebase
       .auth()
       .signOut()
-      .then(() => setIsLoggedIn(false))
       .catch((error) => setError(error.message));
   };
 
@@ -71,29 +107,15 @@ export default function LoginScreen() {
     }
   };
 
-  const handleResetPassword = () => {
-    firebase
-      .auth()
-      .sendPasswordResetEmail(email)
-      .then(() => {
-        Alert.alert(
-          "Correo electrónico enviado",
-          "Revisa tu correo electrónico para restablecer tu contraseña."
-        );
-      })
-      .catch((error) => handleErrors(error));
-  };
-
   return (
     <View style={{ marginHorizontal: 60 }}>
       {isLoggedIn ? (
-        <>
-          <Button onPress={handleLogout}>Logout</Button>
+        <View style={{ alignItems: "center" }}>
           <Text>You are logged in!</Text>
-        </>
+        </View>
       ) : (
         <>
-          <Appbar.Header>
+          <Appbar.Header style={{ backgroundColor: "transparent" }}>
             <Appbar.Content title="Control QR" />
           </Appbar.Header>
           <TextInput
@@ -116,7 +138,7 @@ export default function LoginScreen() {
           {error && <Text style={{ color: "red" }}>{error}</Text>}
           <Button onPress={handleLogin}>Inicia Sesión</Button>
           <Button onPress={handleResetPassword}>Olvide mi contraseña</Button>
-          <Button onPress={handleSignUp}>Registrate</Button>
+          {false && <Button onPress={handleSignUp}>Registrate</Button>}
         </>
       )}
       <StatusBar />

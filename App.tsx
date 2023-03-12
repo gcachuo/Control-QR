@@ -7,7 +7,7 @@ import { SafeAreaView } from "react-native";
 import DrawerNavigator from "./navigation/DrawerNavigator";
 import { NavigationContainer } from "@react-navigation/native";
 
-firebase.initializeApp(firebaseConfig);
+const firebaseApp = firebase.initializeApp(firebaseConfig);
 firebase.auth().languageCode = "es";
 
 export default function App() {
