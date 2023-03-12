@@ -1,14 +1,33 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import { useAuth } from "../hooks/useAuth";
-import Tile from "../components/Tile";
+import {
+  NavigationProp,
+  ParamListBase,
+  useNavigation,
+} from "@react-navigation/native";
+import { Grid } from "../components/Grid";
 
 export default function HomeScreen() {
   const { logout } = useAuth();
+  const navigation: NavigationProp<ParamListBase> = useNavigation();
 
   return (
     <View style={styles.container}>
-      <Tile title="Logout" icon="logout" onPress={logout} />
+      <Grid
+        tiles={[
+          {
+            title: "Mi Cuenta",
+            icon: "account",
+            onPress: () => navigation.navigate("MyAccount"),
+          },
+          {
+            title: "Salir",
+            icon: "logout",
+            onPress: logout,
+          },
+        ]}
+      />
     </View>
   );
 }

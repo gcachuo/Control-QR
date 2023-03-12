@@ -1,13 +1,13 @@
 import React from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { Card, Title, TouchableRipple } from "react-native-paper";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
-type Icon = "logout";
+export type TileIcon = "logout" | "account";
 
 type Props = {
   title: string;
-  icon: Icon;
+  icon: TileIcon;
   onPress: () => void;
 };
 
@@ -15,7 +15,9 @@ const Tile: React.FC<Props> = ({ title, icon, onPress }) => {
   return (
     <TouchableRipple onPress={onPress}>
       <Card style={styles.card}>
-        <MaterialCommunityIcons name={icon} size={48} color="#6200ee" />
+        <View style={styles.icon}>
+          <MaterialCommunityIcons name={icon} size={48} color="#6200ee" />
+        </View>
         <Title style={styles.title}>{title}</Title>
       </Card>
     </TouchableRipple>
@@ -23,6 +25,17 @@ const Tile: React.FC<Props> = ({ title, icon, onPress }) => {
 };
 
 const styles = StyleSheet.create({
+  icon: {
+    width: 110,
+    textAlign: "center",
+    justifyContent: "center",
+    alignItems:'center'
+  },
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
   card: {
     marginVertical: 8,
     marginHorizontal: 16,
@@ -32,10 +45,13 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     elevation: 4,
+    minWidth: 140,
+    minHeight: 140,
   },
   title: {
     marginLeft: 16,
     fontSize: 18,
+    textAlign: "center",
   },
 });
 
