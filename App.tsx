@@ -6,6 +6,7 @@ import { firebaseConfig } from "./firebaseConfig";
 import { SafeAreaView } from "react-native";
 import DrawerNavigator from "./navigation/DrawerNavigator";
 import { NavigationContainer } from "@react-navigation/native";
+import { AuthProvider } from "./hooks/useAuth";
 
 const firebaseApp = firebase.initializeApp(firebaseConfig);
 firebase.auth().languageCode = "es";
@@ -29,10 +30,12 @@ export default function App() {
   }, []);
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <NavigationContainer>
-        <DrawerNavigator />
-      </NavigationContainer>
-    </SafeAreaView>
+    <AuthProvider>
+      <SafeAreaView style={{ flex: 1 }}>
+        <NavigationContainer>
+          <DrawerNavigator />
+        </NavigationContainer>
+      </SafeAreaView>
+    </AuthProvider>
   );
 }

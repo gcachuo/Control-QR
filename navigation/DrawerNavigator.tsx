@@ -17,8 +17,13 @@ const DrawerNavigator = () => {
 
   useEffect(() => {
     const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
-      setIsLoggedIn(true);
-      navigation.navigate("Home");
+      if (user) {
+        setIsLoggedIn(true);
+        navigation.navigate("Home");
+      } else {
+        setIsLoggedIn(false);
+        navigation.navigate("Login");
+      }
     });
     return () => unsubscribe();
   }, []);
