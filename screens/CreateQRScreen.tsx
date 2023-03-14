@@ -65,15 +65,26 @@ const CreateQRScreen = () => {
         </Button>
         {isShown ? (
           <>
-            <ViewShot ref={captureQR}>
-              <View style={styles.qrContainer}>
-                <QRCode value={JSON.stringify(qrValue)} size={250} />
-                <Text style={styles.qrData}>{qrValue.guestName}</Text>
-                <Text style={styles.qrData}>
-                  {moment(qrValue.createdTime).format("DD/MMMM/YYYY")}
-                </Text>
-              </View>
-            </ViewShot>
+            <View
+              style={{
+                borderColor: "black",
+                borderStyle: "solid",
+                borderWidth: 1,
+                marginTop: 20,
+              }}
+            >
+              <ViewShot ref={captureQR}>
+                <View style={styles.qrContainer}>
+                  <Text style={styles.qrData}>Mayorazgo Santa Cecilia</Text>
+                  <QRCode value={JSON.stringify(qrValue)} size={250} />
+                  <Text style={styles.qrData}>{qrValue.guestName}</Text>
+                  <Text style={styles.qrData}>
+                    {moment(qrValue.createdTime).format("DD/MMMM/YYYY")}
+                  </Text>
+                  <Text style={styles.qrData}>Un solo uso</Text>
+                </View>
+              </ViewShot>
+            </View>
             <Button onPress={onCapture}>Compartir QR</Button>
           </>
         ) : null}
@@ -99,14 +110,14 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   qrContainer: {
-    marginTop: 20,
+    paddingVertical: 20,
     alignItems: "center",
-    backgroundColor:'white'
+    backgroundColor: "white",
   },
   qrData: {
-    marginTop: 10,
+    marginVertical: 10,
     fontFamily: "monospace",
-    fontSize: 12,
+    fontSize: 13,
   },
 });
 
