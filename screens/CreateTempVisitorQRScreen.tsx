@@ -7,6 +7,7 @@ import { createQRToken } from "../utils/qrUtils";
 import { useAuth } from "../hooks/useAuth";
 import moment from "moment";
 import ViewShot from "react-native-view-shot";
+import BackButton from "../components/BackButton";
 
 const CreateTempVisitorQRScreen = () => {
   const captureQR = useRef<ViewShot>(null);
@@ -53,6 +54,7 @@ const CreateTempVisitorQRScreen = () => {
 
   return (
     <View style={styles.container}>
+      <BackButton />
       <View style={styles.form}>
         <TextInput
           label="Nombre del visitante"

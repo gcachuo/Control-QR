@@ -8,6 +8,7 @@ import moment from "moment/moment";
 import * as Sharing from "expo-sharing";
 import { createQRToken } from "../utils/qrUtils";
 import { useAuth } from "../hooks/useAuth";
+import BackButton from "../components/BackButton";
 
 const CreateRecurringQRScreen = () => {
   const captureQR = useRef<ViewShot>(null);
@@ -64,6 +65,7 @@ const CreateRecurringQRScreen = () => {
   return (
     <ScrollView>
       <View style={styles.container}>
+        <BackButton />
         <View style={styles.form}>
           <TextInput
             label="Nombre del visitante"
