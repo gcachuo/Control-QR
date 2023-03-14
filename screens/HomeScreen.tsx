@@ -17,6 +17,11 @@ export default function HomeScreen() {
       <Grid
         tiles={[
           {
+            title: "Permitir Acceso",
+            icon: "qrcode",
+            onPress: () => navigation.navigate("CreateQR"),
+          },
+          {
             title: "Mi Cuenta",
             icon: "account",
             onPress: () => navigation.navigate("MyAccount"),

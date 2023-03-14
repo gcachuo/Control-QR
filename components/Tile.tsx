@@ -3,7 +3,7 @@ import { StyleSheet, View } from "react-native";
 import { Card, Title, TouchableRipple } from "react-native-paper";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
-export type TileIcon = "logout" | "account";
+export type TileIcon = "logout" | "account" | "qrcode";
 
 type Props = {
   title: string;
@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
   },
   title: {
     marginLeft: 16,
-    fontSize: 18,
+    fontSize: 12,
     textAlign: "center",
   },
 });
