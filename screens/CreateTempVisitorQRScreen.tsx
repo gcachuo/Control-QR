@@ -78,7 +78,7 @@ const CreateTempVisitorQRScreen = () => {
               <ViewShot ref={captureQR}>
                 <View style={styles.qrContainer}>
                   <Text style={styles.qrData}>Mayorazgo Santa Cecilia</Text>
-                  <QRCode value={JSON.stringify(qrValue)} size={250} />
+                  <QRCode value={"controlqr://myaccount/"} size={250} />
                   <Text style={styles.qrData}>{qrValue.guestName}</Text>
                   <Text style={styles.qrData}>
                     {moment(qrValue.createdTime).format("DD/MMMM/YYYY")}
