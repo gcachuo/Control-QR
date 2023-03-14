@@ -10,6 +10,7 @@ import {
 
 import { getAuth, onAuthStateChanged } from "firebase/auth/react-native";
 import MyAccountStackNavigator from "./MyAccountStackNavigator";
+import CreateQRStackNavigator from "./CreateQRStackNavigator";
 
 const Drawer = createDrawerNavigator();
 
@@ -49,6 +50,11 @@ const DrawerNavigator = () => {
             name="Home"
             component={HomeStackNavigator}
             options={{ title: "Inicio" }}
+          />
+          <Drawer.Screen
+            name="CreateQR"
+            component={CreateQRStackNavigator}
+            options={{ title: "Permitir acceso" }}
           />
           <Drawer.Screen
             name="MyAccount"
