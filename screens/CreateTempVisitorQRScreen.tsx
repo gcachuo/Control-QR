@@ -8,7 +8,7 @@ import { useAuth } from "../hooks/useAuth";
 import moment from "moment";
 import ViewShot from "react-native-view-shot";
 
-const CreateQRScreen = () => {
+const CreateTempVisitorQRScreen = () => {
   const captureQR = useRef<ViewShot>(null);
   const { user } = useAuth();
   const [guestName, setGuestName] = useState("");
@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   form: {
-    width: "80%",
+    width: "90%",
     padding: 20,
     backgroundColor: "white",
     borderRadius: 8,
@@ -121,4 +121,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CreateQRScreen;
+export default CreateTempVisitorQRScreen;

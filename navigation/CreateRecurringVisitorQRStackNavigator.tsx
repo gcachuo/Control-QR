@@ -1,17 +1,17 @@
 import { createStackNavigator } from "@react-navigation/stack";
-import CreateQRScreen from "../screens/CreateQRScreen";
+import CreateRecurringQRScreen from "../screens/CreateRecurringQRScreen";
 
 const Stack = createStackNavigator();
 
-const CreateQRStackNavigator = () => {
+const CreateRecurringVisitorQRStackNavigator = () => {
     return (
         <Stack.Navigator
             initialRouteName={"Main"}
             screenOptions={{ headerShown: false }}
         >
-            <Stack.Screen name="Main" component={CreateQRScreen} />
+            <Stack.Screen name="Main" component={CreateRecurringQRScreen} />
         </Stack.Navigator>
     );
 };
 
-export default CreateQRStackNavigator;
+export default CreateRecurringVisitorQRStackNavigator;
