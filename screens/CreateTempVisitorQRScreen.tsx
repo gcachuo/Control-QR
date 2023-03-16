@@ -41,7 +41,6 @@ const CreateTempVisitorQRScreen = () => {
 
     const qrData = {
       guestName: guestName,
-      hostAddress: "Mayorazgo San Jose #113",
       creatorUid: user?.uid,
       createdTime: new Date().getTime(),
       type: "unique",

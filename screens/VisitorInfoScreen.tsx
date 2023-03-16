@@ -17,6 +17,8 @@ const VisitorInfoScreen = () => {
   const [address, setAddress] = useState("");
   const [date, setDate] = useState("");
   const [type, setType] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [hostName, setHostName] = useState("");
   const route = useRoute<RouteProp<Record<string, { id?: string }>, string>>();
   const { id } = route.params;
   const navigation = useNavigation();
@@ -35,7 +37,6 @@ const VisitorInfoScreen = () => {
 
       if (data) {
         const name = data.guestName;
-        const address = data.hostAddress;
         const date = data.createdTime;
         let type = data.type;
 
@@ -46,9 +47,16 @@ const VisitorInfoScreen = () => {
         }
 
         setName(name);
-        setAddress(address);
         setType(type);
         setDate(moment(date).format("DD [de] MMMM"));
+
+        const userData = await getDoc(
+          doc(getFirestore(), "users", data.creatorUid)
+        );
+        const user = userData.data()!;
+        setHostName(user.name);
+        setPhoneNumber(user.phoneNumber);
+        setAddress(user.address);
       }
     } else {
       // el documento no existe
@@ -71,12 +79,19 @@ const VisitorInfoScreen = () => {
         <View style={styles.infoContainer}>
           <Text style={styles.label}>Nombre:</Text>
           <Text style={styles.text}>{name}</Text>
-          <Text style={styles.label}>Dirección:</Text>
-          <Text style={styles.text}>{address}</Text>
           <Text style={styles.label}>Fecha:</Text>
           <Text style={styles.text}>{date}</Text>
           <Text style={styles.label}>Tipo de acceso:</Text>
           <Text style={styles.text}>{type}</Text>
+        </View>
+        <Text style={styles.title}>Información del colono</Text>
+        <View style={styles.infoContainer}>
+          <Text style={styles.label}>Nombre:</Text>
+          <Text style={styles.text}>{hostName}</Text>
+          <Text style={styles.label}>Dirección:</Text>
+          <Text style={styles.text}>{address}</Text>
+          <Text style={styles.label}>Teléfono:</Text>
+          <Text style={styles.text}>{phoneNumber}</Text>
         </View>
         {isAuthorized && (
           <Text style={styles.authorizedText}>Ingreso autorizado</Text>

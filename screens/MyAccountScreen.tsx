@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, TouchableWithoutFeedback, View } from "react-native";
 import {
+  Appbar,
   Avatar,
   Button,
   Caption,
@@ -25,15 +26,18 @@ export default function MyAccountScreen() {
   const [editedData, setEditedData] = useState({
     displayName: "",
     email: "",
+    address: "",
     phoneNumber: "",
     photoURL: "",
   });
+  const [address, setAddress] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
 
   useEffect(() => {
     (async () => {
       if (user) {
         const data = await getDoc(doc(getFirestore(), "users", user.uid));
+        setAddress(data.data()?.address);
         setPhoneNumber(data.data()?.phoneNumber);
       }
     })();
@@ -46,9 +50,12 @@ export default function MyAccountScreen() {
 
         await updateProfile(user, editedData);
         await setDoc(doc(getFirestore(), "users", user.uid), {
+          name: user.displayName,
+          address: editedData.address,
           phoneNumber: editedData.phoneNumber,
           photoURL: editedData.photoURL,
         });
+        setAddress(editedData.address);
         setPhoneNumber(editedData.phoneNumber);
 
         console.log("Finish save");
@@ -95,7 +102,30 @@ export default function MyAccountScreen() {
 
   return (
     <View>
-      <BackButton />
+      <Appbar
+        style={{
+          justifyContent: "space-between",
+          backgroundColor: "transparent",
+        }}
+      >
+        <BackButton />
+        <TouchableWithoutFeedback
+          onPress={() => {
+            setEditedData({
+              displayName: user?.displayName || "",
+              email: user?.email || "",
+              address: address || "",
+              phoneNumber: phoneNumber || "",
+              photoURL: user?.photoURL || "",
+            });
+            setIsModalVisible(true);
+          }}
+        >
+          <View>
+            <IconButton icon="pencil" size={20} />
+          </View>
+        </TouchableWithoutFeedback>
+      </Appbar>
       <View style={styles.container}>
         <Avatar.Image
           source={{
@@ -108,28 +138,32 @@ export default function MyAccountScreen() {
           {user?.displayName || "<Sin Nombre>"}
         </Title>
         <Caption style={styles.caption}>{user?.email || ""}</Caption>
-        <Caption style={styles.caption}>{phoneNumber || ""}</Caption>
-
-        <TouchableWithoutFeedback
-          onPress={() => {
-            setEditedData({
-              displayName: user?.displayName || "",
-              email: user?.email || "",
-              phoneNumber: phoneNumber || "",
-              photoURL: user?.photoURL || "",
-            });
-            setIsModalVisible(true);
-          }}
-        >
-          <View>
-            <IconButton icon="pencil" size={20} />
-          </View>
-        </TouchableWithoutFeedback>
+        <Caption style={styles.caption}>{address || "<Sin Calle>"}</Caption>
+        <Caption style={styles.caption}>
+          {phoneNumber || "<Sin Teléfono>"}
+        </Caption>
         <Modal
           visible={isModalVisible}
           onDismiss={() => setIsModalVisible(false)}
         >
           <View style={styles.modalContainer}>
+            <View
+              style={{
+                justifyContent: "space-around",
+                flexDirection: "row",
+                alignItems: "center",
+              }}
+            >
+              <Avatar.Image
+                source={{
+                  uri: editedData?.photoURL,
+                }}
+                size={100}
+                style={styles.avatar}
+              />
+              <Button onPress={chooseImage}>Tomar foto</Button>
+            </View>
+
             <TextInput
               label="Nombre Completo"
               value={editedData.displayName}
@@ -145,30 +179,37 @@ export default function MyAccountScreen() {
               }
             />
             <TextInput
+              label="Dirección"
+              value={editedData.address}
+              onChangeText={(text) => {
+                setEditedData({ ...editedData, address: text });
+              }}
+            />
+            <TextInput
               label="Teléfono"
               value={editedData.phoneNumber}
               onChangeText={(text) => {
                 setEditedData({ ...editedData, phoneNumber: text });
               }}
             />
-            <Avatar.Image
-              source={{
-                uri: editedData?.photoURL,
-              }}
-              size={100}
-              style={styles.avatar}
-            />
-            <Button onPress={chooseImage}>Tomar foto</Button>
-            <Button
-              onPress={async () => {
-                // Lógica para guardar los datos editados
-                await handleSave();
-                setIsModalVisible(false);
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-around",
+                marginTop: 20,
               }}
             >
-              Guardar
-            </Button>
-            <Button onPress={() => setIsModalVisible(false)}>Cancelar</Button>
+              <Button onPress={() => setIsModalVisible(false)}>Cancelar</Button>
+              <Button
+                onPress={async () => {
+                  // Lógica para guardar los datos editados
+                  await handleSave();
+                  setIsModalVisible(false);
+                }}
+              >
+                Guardar
+              </Button>
+            </View>
           </View>
         </Modal>
       </View>
