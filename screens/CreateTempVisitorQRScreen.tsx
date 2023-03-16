@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { Button, TextInput } from "react-native-paper";
 import * as Sharing from "expo-sharing";
 import QRCode from "react-native-qrcode-svg";
@@ -73,7 +73,7 @@ const CreateTempVisitorQRScreen = () => {
   };
 
   return (
-    <>
+    <ScrollView>
       <BackButton />
       <View style={styles.container}>
         <View style={styles.form}>
@@ -119,7 +119,7 @@ const CreateTempVisitorQRScreen = () => {
           ) : null}
         </View>
       </View>
-    </>
+    </ScrollView>
   );
 };
 
