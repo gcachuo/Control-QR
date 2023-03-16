@@ -19,11 +19,11 @@ const CreateTempVisitorQRScreen = () => {
   const [qrValue, setQRValue] = useState<{
     guestName?: string;
     createdTime?: number;
+    token?: string;
   }>({});
   const linkTo = useLinkTo();
 
   const isShown = qrValue.guestName;
-  const QRDeepLink = `${Constants.expoConfig?.scheme}://visitor/1`;
 
   const handleGenerateQR = async () => {
     setQRValue({});
@@ -52,8 +52,8 @@ const CreateTempVisitorQRScreen = () => {
       console.log("La visita ha sido registrada en Firestore.");
       setQRValue(qrData);
       console.log(qrValue);
-      const url = linkTo("/visitor/" + qrData.token);
-      console.log(url);
+      // const url = linkTo("/visitor/" + qrData.token);
+      // console.log(url);
     } catch (e) {
       console.error("Error al registrar la visita:", e);
     }
@@ -99,7 +99,13 @@ const CreateTempVisitorQRScreen = () => {
                 <ViewShot ref={captureQR}>
                   <View style={styles.qrContainer}>
                     <Text style={styles.qrData}>Mayorazgo Santa Cecilia</Text>
-                    <QRCode value={QRDeepLink} size={250} />
+                    <QRCode
+                      value={
+                        `${Constants.expoConfig?.scheme}://visitor/` +
+                        qrValue.token
+                      }
+                      size={250}
+                    />
                     <Text style={styles.qrData}>{qrValue.guestName}</Text>
                     <Text style={styles.qrData}>
                       {moment(qrValue.createdTime).format("DD/MMMM/YYYY")}
