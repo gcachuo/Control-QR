@@ -30,6 +30,7 @@ export default function MyAccountScreen() {
     phoneNumber: "",
     photoURL: "",
   });
+  const [name, setName] = useState("");
   const [address, setAddress] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
 
@@ -37,6 +38,7 @@ export default function MyAccountScreen() {
     (async () => {
       if (user) {
         const data = await getDoc(doc(getFirestore(), "users", user.uid));
+        setName(data.data()?.name);
         setAddress(data.data()?.address);
         setPhoneNumber(data.data()?.phoneNumber);
       }
@@ -55,6 +57,7 @@ export default function MyAccountScreen() {
           phoneNumber: editedData.phoneNumber,
           photoURL: editedData.photoURL,
         });
+        setName(user.displayName!);
         setAddress(editedData.address);
         setPhoneNumber(editedData.phoneNumber);
 
@@ -135,7 +138,7 @@ export default function MyAccountScreen() {
           style={styles.avatar}
         />
         <Title style={styles.title}>
-          {user?.displayName || "<Sin Nombre>"}
+          {name || user?.displayName || "<Sin Nombre>"}
         </Title>
         <Caption style={styles.caption}>{user?.email || ""}</Caption>
         <Caption style={styles.caption}>{address || "<Sin Calle>"}</Caption>
@@ -233,8 +236,8 @@ const styles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 16,
     marginBottom: 10,
-    minWidth:150,
-    textAlign:'center'
+    minWidth: 150,
+    textAlign: "center",
   },
   modalContainer: {
     backgroundColor: "white",
