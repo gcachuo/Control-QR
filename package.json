@@ -2,13 +2,14 @@
   "name": "control-qr",
   "version": "1.0.0",
   "scripts": {
-    "start": "expo start",
+    "start": "npx expo start",
     "android": "react-native run-android",
     "ios": "react-native run-ios",
-    "web": "expo start --web",
+    "web": "npx expo start --web",
     "build:android": "rm -rf ./build/*.apk && eas build --platform android --local",
     "build:ios": "eas build --platform ios --local",
-    "update": "eas update --branch production"
+    "update:dev": "eas update --branch develop",
+    "update:prod": "eas update --branch production"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "1.17.11",
