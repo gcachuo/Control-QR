@@ -12,6 +12,7 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 import MyAccountStackNavigator from "./MyAccountStackNavigator";
 import CreateQRBottomTabNavigator from "./CreateQRBottomTabsNavigator";
 import ReadQRStackNavigator from "./ReadQRStackNavigator";
+import MyVisitsStackNavigator from "./MyVisitsStackNavigator";
 
 const Drawer = createDrawerNavigator();
 
@@ -60,6 +61,11 @@ const DrawerNavigator = () => {
             name="ReadQR"
             component={ReadQRStackNavigator}
             options={{ title: "Leer acceso" }}
+          />
+          <Drawer.Screen
+              name="MyVisits"
+              component={MyVisitsStackNavigator}
+              options={{ title: "Mis Visitas" }}
           />
           <Drawer.Screen
             name="MyAccount"

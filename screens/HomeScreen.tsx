@@ -27,6 +27,11 @@ export default function HomeScreen() {
             onPress: () => navigation.navigate("ReadQR"),
           },
           {
+            title: "Mis Visitas",
+            icon: "car-key",
+            onPress: () => navigation.navigate("MyVisits"),
+          },
+          {
             title: "Mi Cuenta",
             icon: "account",
             onPress: () => navigation.navigate("MyAccount"),
