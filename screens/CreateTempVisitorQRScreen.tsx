@@ -16,6 +16,7 @@ const CreateTempVisitorQRScreen = () => {
   const captureQR = useRef<ViewShot>(null);
   const { user } = useAuth();
   const [guestName, setGuestName] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const [qrValue, setQRValue] = useState<{
     guestName?: string;
     createdTime?: number;
@@ -49,6 +50,7 @@ const CreateTempVisitorQRScreen = () => {
     };
 
     try {
+      setIsLoading(true);
       console.log(qrData);
       await setDoc(doc(getFirestore(), "visits", qrData.token), qrData);
       console.log("La visita ha sido registrada en Firestore.");
@@ -58,6 +60,8 @@ const CreateTempVisitorQRScreen = () => {
       // console.log(url);
     } catch (e) {
       console.error("Error al registrar la visita:", e);
+    }finally {
+      setIsLoading(false);
     }
   };
 
@@ -85,7 +89,7 @@ const CreateTempVisitorQRScreen = () => {
             onChangeText={setGuestName}
             style={styles.input}
           />
-          <Button mode="contained" onPress={handleGenerateQR} disabled={!qrValue.guestName}>
+          <Button mode="contained" onPress={handleGenerateQR} disabled={isLoading}>
             Generar QR
           </Button>
           {isShown ? (
