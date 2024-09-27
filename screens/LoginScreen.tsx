@@ -14,7 +14,7 @@ import {
   getAuth,
   sendPasswordResetEmail,
   signInWithEmailAndPassword,
-} from "firebase/auth/react-native";
+} from "firebase/auth";
 
 export default function LoginScreen() {
   const [email, setEmail] = useState("");

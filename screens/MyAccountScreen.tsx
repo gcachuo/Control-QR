@@ -12,7 +12,7 @@ import {
 } from "react-native-paper";
 import BackButton from "../components/BackButton";
 import { useAuth } from "../hooks/useAuth";
-import { updateProfile } from "firebase/auth/react-native";
+import { updateProfile } from "firebase/auth";
 import { FirebaseError } from "firebase/app";
 import { doc, getDoc, getFirestore, setDoc } from "firebase/firestore";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";

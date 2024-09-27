@@ -6,7 +6,7 @@ import {
   signInWithEmailAndPassword,
   signOut,
   User,
-} from "firebase/auth/react-native";
+} from "firebase/auth";
 
 type AuthContextProps = {
   user: User | null;

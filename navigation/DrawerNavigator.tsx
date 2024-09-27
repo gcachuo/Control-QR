@@ -8,7 +8,7 @@ import {
   useNavigation,
 } from "@react-navigation/native";
 
-import { getAuth, onAuthStateChanged } from "firebase/auth/react-native";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 import MyAccountStackNavigator from "./MyAccountStackNavigator";
 import CreateQRBottomTabNavigator from "./CreateQRBottomTabsNavigator";
 import ReadQRStackNavigator from "./ReadQRStackNavigator";
@@ -34,7 +34,6 @@ const DrawerNavigator = () => {
 
   return (
     <Drawer.Navigator
-      useLegacyImplementation
       initialRouteName={"Login"}
       screenOptions={{ headerTitle: "Control QR" }}
     >
