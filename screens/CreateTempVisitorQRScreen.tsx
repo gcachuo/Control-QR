@@ -5,7 +5,7 @@ import * as Sharing from "expo-sharing";
 import QRCode from "react-native-qrcode-svg";
 import { createQRToken } from "../utils/qrUtils";
 import { useAuth } from "../hooks/useAuth";
-import moment from "moment";
+import moment from 'moment-timezone';
 import ViewShot from "react-native-view-shot";
 import BackButton from "../components/BackButton";
 import Constants from "expo-constants";
@@ -13,6 +13,7 @@ import { useLinkTo } from "@react-navigation/native";
 import { doc, getFirestore, setDoc } from "firebase/firestore";
 
 const CreateTempVisitorQRScreen = () => {
+  moment.tz.setDefault("America/Mexico_City");
   const captureQR = useRef<ViewShot>(null);
   const { user } = useAuth();
   const [guestName, setGuestName] = useState("");

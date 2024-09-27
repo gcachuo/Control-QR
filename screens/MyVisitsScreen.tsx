@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import {ScrollView, StyleSheet, View} from "react-native";
 import BackButton from "../components/BackButton";
 import {Appbar, List} from "react-native-paper";
@@ -7,13 +7,15 @@ import {collection, query, where, getDocs, getFirestore} from "firebase/firestor
 import {useAuth} from "../hooks/useAuth";
 import firebase from "firebase/compat";
 import DocumentData = firebase.firestore.DocumentData;
+import { useFocusEffect} from "@react-navigation/native";
 
 export default function MyVisitsScreen() {
     const { user } = useAuth();
     const [visits, setVisits] = useState<{[key: string]:DocumentData[]}>({});
     moment.tz.setDefault("America/Mexico_City");
 
-    useEffect(() => {
+    useFocusEffect(
+    useCallback(() => {
         (async () => {
             const q = query(
                 collection(getFirestore(), "visits"),
@@ -38,7 +40,7 @@ export default function MyVisitsScreen() {
 
             setVisits(grouped);
         })();
-    }, [user]);
+    }, [user]));
 
     console.log(visits);
     return (

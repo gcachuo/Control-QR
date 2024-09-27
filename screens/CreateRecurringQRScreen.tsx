@@ -4,13 +4,15 @@ import { Button, Text, TextInput } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 import ViewShot from "react-native-view-shot";
 import QRCode from "react-native-qrcode-svg";
-import moment from "moment/moment";
+import moment from 'moment-timezone';
 import * as Sharing from "expo-sharing";
 import { createQRToken } from "../utils/qrUtils";
 import { useAuth } from "../hooks/useAuth";
 import BackButton from "../components/BackButton";
 
 const CreateRecurringQRScreen = () => {
+  moment.tz.setDefault("America/Mexico_City");
+
   const captureQR = useRef<ViewShot>(null);
   const navigation = useNavigation();
 
