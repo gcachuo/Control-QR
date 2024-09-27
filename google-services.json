@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "911129246688",
+    "project_id": "control-qr-380300",
+    "storage_bucket": "control-qr-380300.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:911129246688:android:e3596f92c8718188650985",
+        "android_client_info": {
+          "package_name": "com.gcachuo.controlqr"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "911129246688-r00qclt7nfdk30vrmpvnthvieuccqj26.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD64vtb_NDq6IcrsuNMvVhJHuTC7R2QnV8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "911129246688-r00qclt7nfdk30vrmpvnthvieuccqj26.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -32,7 +32,8 @@
       "package": "com.gcachuo.controlqr",
       "permissions": [
         "android.permission.CAMERA"
-      ]
+      ],
+      "googleServicesFile": "./google-services.json"
     },
     "web": {
       "favicon": "./assets/favicon.png"
