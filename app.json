@@ -3,8 +3,8 @@
     "name": "Control QR",
     "scheme": "controlqr",
     "slug": "control-qr",
-    "version": "1.1.2",
-    "runtimeVersion": "1.1.2",
+    "version": "1.1.3",
+    "runtimeVersion": "1.1.3",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -34,7 +34,8 @@
       "permissions": [
         "android.permission.CAMERA"
       ],
-      "googleServicesFile": "./google-services.json"
+      "googleServicesFile": "./google-services.json",
+      "versionCode": 2
     },
     "web": {
       "favicon": "./assets/favicon.png"

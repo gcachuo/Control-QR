@@ -1,17 +1,9 @@
 {
   "cli": {
-    "version": ">= 2.1.0"
+    "version": ">= 2.1.0",
+    "appVersionSource": "local"
   },
   "build": {
-    "development": {
-      "channel": "develop",
-      "developmentClient": true,
-      "distribution": "internal"
-    },
-    "preview": {
-      "channel": "preview",
-      "distribution": "internal"
-    },
     "production": {
       "channel": "production",
       "android": {
@@ -21,6 +13,18 @@
           "EAS_LOCAL_BUILD_ARTIFACTS_DIR": "./build"
         }
       }
+    },
+    "preview": {
+      "extends": "production",
+      "channel": "preview",
+      "distribution": "internal"
+    },
+    "development": {
+      "extends": "production",
+      "channel": "develop",
+      "developmentClient": true,
+      "distribution": "internal",
+      "autoIncrement": true
     }
   },
   "submit": {

@@ -125,6 +125,7 @@ export default function LoginScreen() {
             onChangeText={setPassword}
             secureTextEntry
             style={styles.TextInput}
+            autoCapitalize="none"
           />
           {error && <Text style={{ color: "red" }}>{error}</Text>}
           <Button onPress={handleLogin}>Inicia Sesión</Button>
