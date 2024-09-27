@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "control-qr",
+    "name": "Control QR",
     "scheme": "controlqr",
     "slug": "control-qr",
     "version": "1.1.2",
@@ -22,7 +22,8 @@
       "infoPlist": {
         "NSCameraUsageDescription": "Allow $(PRODUCT_NAME) to access camera.",
         "NSMicrophoneUsageDescription": "Allow $(PRODUCT_NAME) to access your microphone"
-      }
+      },
+      "googleServicesFile": "./GoogleService-Info.plist"
     },
     "android": {
       "adaptiveIcon": {
@@ -56,7 +57,8 @@
           "cameraPermission": "Allow $(PRODUCT_NAME) to access camera."
         }
       ],
-      "expo-secure-store"
+      "expo-secure-store",
+      "@react-native-firebase/app"
     ]
   }
 }
