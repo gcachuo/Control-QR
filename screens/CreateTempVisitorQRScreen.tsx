@@ -85,7 +85,7 @@ const CreateTempVisitorQRScreen = () => {
             onChangeText={setGuestName}
             style={styles.input}
           />
-          <Button mode="contained" onPress={handleGenerateQR} disabled={!isShown}>
+          <Button mode="contained" onPress={handleGenerateQR} disabled={!qrValue.guestName}>
             Generar QR
           </Button>
           {isShown ? (

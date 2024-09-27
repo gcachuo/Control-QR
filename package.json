@@ -6,8 +6,8 @@
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "web": "npx expo start --web",
-    "build:android": "rm -rf ./build/*.apk && eas build --platform android --local",
-    "build:ios": "eas build --platform ios --local",
+    "build:android": "eas build --platform android",
+    "build:ios": "eas build --platform ios",
     "update:dev": "eas update --branch develop",
     "update:prod": "eas update --branch production"
   },
